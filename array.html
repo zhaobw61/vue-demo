@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 遍历数组 -->
+        <!-- 直接通过下标改变数组 是不行的 页面 只能用vue 提供的7种变异方法 -->
+        <!-- 1.可以改变数组引用 -->
+        <!-- 2.push pop shift unshift splict reverse sort -->
+        <!-- 3.Vue 提供了set的方法 -->
+        <!-- Vue.set(key,value) -->
+        <!-- vm.$set(arr,index,value) -->
+        <div v-for="(item,index) in list" :key = "item.id">
+            {{item.text}}
+        </div>
+        <br>    
+        <!-- 遍历对象 -->
+        <!-- 不能直接加key和vule 新添值-->
+        <!-- 1.可以直接通过key修改已存在的  -->
+        <!-- 2.如果要加数据，就需要改变引用 -->
+        <!-- 3.Vue 提供了set的方法 -->
+        <!-- Vue.set(obj,key,value) -->
+        <!-- vm.$set(obj,key,value) -->
+        <div v-for="(item,key,index) of obj">
+            {{item}}---{{key}}---{{index}}
+        </div>
+    </div>
+    <!-- 模板占位符 可以报过一些标签 不会被渲染到页面上 -->
+    <!-- <template></template> -->
+</body>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            list:[{
+                id:'001',
+                text:'z1'
+            },{
+                id:'002',
+                text:'z2'
+            },{
+                id:'003',
+                text:'z3'
+            },{
+                id:'004',
+                text:'z4'
+            }],
+            obj:{
+                name:'z',
+                age:28,
+                gender:'male',
+                salary:'secret'
+            }
+        }
+    })
+</script>
+</html>

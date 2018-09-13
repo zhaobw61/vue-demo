@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{msg}}</div>
+        <div v-text='content'></div>
+        <div v-html='content'></div>
+        <br>
+        <div v-on:click="handleClick">{{msg}}</div>
+        <div @click="handleClick">{{msg}}</div>
+        <br>
+        <!-- 属性绑定 -->
+        <div v-bind:title="title">title</div>
+        <div :title="title">title</div>
+        <br>
+        <!-- 双向绑定 -->
+        <input type="text" v-model:value='msg'>
+        <div>{{msg}}</div>
+        <!-- 计算属性与侦听器 -->
+        <input type="text" v-model = 'fristName'>
+        <input type="text" v-model = 'lastName'>
+        <div>{{fristName}}{{lastName}}</div>
+        <div>{{fullName}}</div>
+        <div>{{count}}</div>
+        <!-- v-if v-show v-for -->
+        <div v-if="show">hello world</div> <!-- 移除dom -->
+        <div v-show="show">hello world</div> <!-- 暂时隐藏dom -->
+        <button @click = 'handleClick'>toggle</button>
+        
+        <ul>
+            <li v-for="(item,index) of list" :key="index">{{item}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el:'#root', // vue实例挂载点
+        // template:'<div>{{msg}}</div> ', // 模板 可以放在挂在点 也可以 放在实例里面
+        data:{
+            msg:"hello world",
+            content:"<h1>asd</h1>",
+            title:"zhaobowen",
+            fristName:'zhao',
+            lastName:'BoWen',
+            count:0,
+            show:true,
+            list:[1,2,3,4]
+        },
+        methods:{
+            handleClick:function(){
+                this.msg = 'zhaobowen';
+                this.show = !this.show;
+            }
+        },
+        computed:{ // 计算属性
+            fullName:function(){ // 如果值没有变就采用缓存
+                return this.fristName+this.lastName;
+            }
+        },
+        watch:{ // 侦听器
+            fristName:function(){
+                this.count ++;
+            },
+            lastName:function(){
+                this.count ++;
+            },
+            fullName:function(){
+                this.count ++;
+            }
+        }
+    })
+    console.log(app.msg);
+    console.log(app.$data.msg);
+</script>
+</html>

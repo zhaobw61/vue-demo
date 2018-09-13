@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性，方法，侦听器</title>
+</head>
+<body>
+    <div id="app">
+        {{firstName + lastName}}
+        {{fullName()}}
+        {{fullName1}}
+        {{fullName2}}
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            firstName:'ell',
+            lastName:'dell',
+            fullName2:''
+        },
+        // 侦听 有缓存
+        watch:{
+            firstName:function(){
+                this.fullName2 = this.firstName + this.lastName;
+            },
+            lastName:function(){
+                this.fullName2 = this.firstName + this.lastName;
+            }
+        },
+        // 用方法实现计算属性 但是没有缓存的机制
+        methods:{
+            fullName:function(){
+                return this.firstName + this.lastName + 'asd';
+            }            
+        },
+        //计算属性 有缓存 只有依赖的值才会重新计算
+        computed:{
+            fullName1:function(){
+                return this.firstName + this.lastName + 'asdasdasd';
+            }
+        }
+    })
+</script>
+</html>

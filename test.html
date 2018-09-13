@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="显示图片" id="btn1">
+    <img src="" alt="" id="pic">
+    <script>
+        var btn1Obj = document.getElementById("bnt1");
+        console.log(btn1Obj);
+        btn1Obj.onclick = function () {
+            var imgObj = document.getElementById("pic");
+            imgObj.src="img/0.png";
+        };
+    </script>
+</body>
+</html>
