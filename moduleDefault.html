@@ -7,6 +7,51 @@
     <title>组件参数校验与非Props特性</title>
 </head>
 <body>
-    
+    <!-- props特性 -->
+    <!-- 父组件向子组件传递数据的时候 父组件和子组件有对应的属性-->
+    <!-- 非props特性 -->
+    <!-- 父组件想子组件传递数据的时候，子组件没有接受这个特性 -->
+    <!-- 父组件的传入属性会展示在子组件的最外层标签的属性上 -->
+    <!-- 使用场景比较少 -->
+    <div id="app">
+        <child :content="'123'" :name="123" :age="'asd'" :sex="'asd'"></child>
+    </div>
 </body>
+<script src="./vue.js"></script>
+<script>
+    Vue.component('child',{
+        // props:['content'],
+        props:{
+            content :String,
+            name    :[String,Number],    //数字或者字符串,
+            age     :{
+                type:String,
+                required:true, // 必须传入的参数
+                default : 'default value' // 如果没有传入就用这个值
+            },
+            sex:{
+                type:String,
+                validator:function(value){ // 验证器
+                    if(value.length > 5){
+                        return true;
+                    }
+                }
+            }
+        },
+        template:'<div @click="hanldeClick">{{content}}</div>',
+        data:function(){
+            return {
+                aaa:this.content
+            }
+        },
+        methods:{
+            hanldeClick:function(){
+                console.log(this.aaa);
+            }
+        }
+    });
+    var vm = new Vue({
+        el:"#app",
+    });
+</script>
 </html>

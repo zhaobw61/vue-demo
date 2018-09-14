@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>非父子组件间传值(bus/总线/发布订阅模式/观察者模式)</title>
+</head>
+<body>
+    <div id="root">
+        <child content="apple"></child>
+        <child content="banana"></child>
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+    Vue.prototype.bus = new Vue();
+    Vue.component('child',{
+        props:{
+            content:String,
+        },
+        data:function(){
+            return{
+                slefContent:this.content
+            }
+        },
+        template:'<div @click=handleClick>{{slefContent}}</div>',
+        methods:{
+            handleClick:function(){
+                this.$emit('change',this.content);
+            }
+        },
+        mounted:function(){
+            var _this = this;
+            // this.bus.$on('change',function(msg){
+            //     _this.slefContent = msg;
+            // })
+        }
+    });
+    var vm = new Vue({
+        el:'#root',
+        created:function(){
+            var _this = this;
+            console.log('change');
+            this.$on('change',function(msg){
+                console.log('handleChange');
+            })
+        },
+        methods:{
+            handleChange:function(){
+                console.log('handleChange');
+            }
+        }
+    });
+</script>
+</html>
