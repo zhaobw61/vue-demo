@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态组件与v-once指令</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <child-one v-if="type === 'child-one'"></child-one> -->
+        <!-- <child-two v-if="type === 'child-two'"></child-two> -->
+        <!-- 动态组件 -->
+        <component :is="type">
+            <div slot="foot">zhaobowen</div>  
+        </component>
+        <!-- v-once -->
+        <!-- 不会删除组件 只是放在内存里 可以减少消耗 -->
+        <button v-on:click="handleBtnclick">click</button>
+        
+    </div>
+</body>
+<script src="./vue.js"></script>
+<script>
+
+    Vue.component('child-one',{
+        template:`<div v-once>
+                    child-one
+                    <slot name='foot'></slot>
+                  </div>`
+    })
+    Vue.component('child-two',{
+        template:'<div>child-two</div>'
+    })
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            type:'child-one'
+        },
+        methods:{
+            handleBtnclick:function(){
+                this.type = this.type === 'child-one' ? this.type = 'child-two' : this.type = 'child-one';
+            }
+        }
+    })
+</script>
+</html>
