@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue中JS动画和velocity.js</title>
+    <script src="./vue.js"></script>
+    <script src="./velocity.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <transition 
+            name='fade'
+            @before-enter="handleBeforeEnter"
+            @enter = "handleEnter"
+            @after-enter = "handleAfterEnter"
+        >
+            <div v-if='show'>hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        /*
+            动画钩子
+            进厂动画
+            before-enter=>enter=>after-enter
+            离场动画
+            before-leave=>leave=>after-leave
+        */
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:true
+            },
+            methods:{
+                handleClick:function(){
+                    this.show = !this.show;
+                },
+                handleBeforeEnter:function(el){
+                    el.style.color = 'red';
+                },
+                handleEnter:function(el,done) {
+                    console.log('asdasd');
+                    setTimeout(function(){
+                        el.style.color = 'blue';
+                        
+                    },2000);
+                    setTimeout(function(){
+                        // done 回调函数执行后会 去调用handleAfterEnter
+                        done();
+                    },4000);
+                },
+                handleAfterEnter:function(el){
+                    el.style.color = 'yellow';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

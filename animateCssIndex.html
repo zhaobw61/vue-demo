@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue中css动画原理</title>
+    <script src="./vue.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet">
+</head>
+<body>
+    <!--
+        动画显示的过程 
+        1.fade-enter fade-enter-active
+        2.fade-enter-active fade-enter-to
+        3.none 
+        动画隐藏的过程 
+        1.fade-leave fade-leave-active
+        2.fade-leave-active fade-leave-to
+        3.none
+        可以定义class的名字
+     -->
+    <div id="root">
+        <transition 
+            name='fade'
+            enter-active-class="animated swing"
+            leave-active-class="animated shake"
+        >
+            <div v-if='show'>hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                show:true
+            },
+            methods:{
+                handleClick:function(){
+                    this.show = !this.show;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
